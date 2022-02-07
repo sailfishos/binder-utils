@@ -1,6 +1,6 @@
 Name: binder-utils
 
-Version: 1.0.0
+Version: 1.0
 Release: 0
 Summary: Binder utils
 License: BSD
