@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Jolla Ltd.
+ * Copyright (C) 2021-2022 Jolla Ltd.
  * Copyright (C) 2021 Franz-Josef Haider <franz.haider@jolla.com>
  *
  * You may use this file under the terms of BSD license as follows:
@@ -65,10 +65,10 @@ int main(int argc, char *argv[])
     int remove = 0;
     GOptionEntry entries[] = {
         { "remove", 'r', 0, G_OPTION_ARG_NONE, &remove,
-          "Reomve the given binder device instead of adding it.", NULL },
+          "Remove the given binder device instead of adding it", NULL },
         { NULL }
     };
-    GOptionContext* options = g_option_context_new("[options] NAME");
+    GOptionContext* options = g_option_context_new("NAME");
     GError* error = NULL;
     char *binder_device_name;
     int ret;
