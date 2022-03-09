@@ -6,7 +6,21 @@
 # Required packages
 #
 
-PKGS = glib-2.0 gio-2.0 gio-unix-2.0 libglibutil libgbinder
+PKGS = glib-2.0 gio-2.0 gio-unix-2.0
+
+ifeq ($(LIBGLIBUTIL_PATH),)
+PKGS += libglibutil
+else
+INCLUDES += -I$(LIBGLIBUTIL_PATH)/include
+LIBRARY_LIBS += -L$(LIBGLIBUTIL_PATH)/build/release -lglibutil
+endif
+
+ifeq ($(LIBGBINDER_PATH),)
+PKGS += libgbinder
+else
+INCLUDES += -I$(LIBGBINDER_PATH)/include
+LIBRARY_LIBS += -L$(LIBGBINDER_PATH)/build/release -lgbinder
+endif
 
 #
 # Default target
@@ -44,11 +58,11 @@ STRIP ?= strip
 CC ?= $(CROSS_COMPILE)gcc
 LD = $(CC)
 WARNINGS = -Wall
-INCLUDES = -I$(GEN_DIR) -I$(SRC_DIR)
+INCLUDES += -I$(GEN_DIR) -I$(SRC_DIR)
 BASE_FLAGS = -fPIC
 CFLAGS = $(BASE_FLAGS) $(DEFINES) $(WARNINGS) $(INCLUDES) -MMD -MP \
   $(shell pkg-config --cflags $(PKGS))
-LDFLAGS = $(BASE_FLAGS) $(shell pkg-config --libs $(PKGS))
+LDFLAGS = $(BASE_FLAGS) $(shell pkg-config --libs $(PKGS)) $(LIBRARY_LIBS)
 QUIET_MAKE = make --no-print-directory
 DEBUG_FLAGS = -g
 RELEASE_FLAGS =
