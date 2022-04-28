@@ -37,4 +37,5 @@ make -C binder-add DESTDIR=%{buildroot} install
 
 %files
 %defattr(-,root,root,-)
+%license LICENSE
 %{_bindir}/binder-add
