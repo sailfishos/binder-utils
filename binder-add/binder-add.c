@@ -84,8 +84,12 @@ int main(int argc, char *argv[])
         char* help;
 
         if (argc == 2) {
-            binder_device_name = argv[1];
-            ok = TRUE;
+            if (strlen(argv[1]) <= BINDERFS_MAX_NAME) {
+                binder_device_name = argv[1];
+                ok = TRUE;
+            } else {
+                GERR("Device NAME too long");
+            }
         } else {
             help = g_option_context_get_help(options, TRUE, NULL);
             fprintf(stderr, "%s", help);
