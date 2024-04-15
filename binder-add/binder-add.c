@@ -84,8 +84,12 @@ int main(int argc, char *argv[])
         char* help;
 
         if (argc == 2) {
-            binder_device_name = argv[1];
-            ok = TRUE;
+            if (strlen(argv[1]) <= BINDERFS_MAX_NAME) {
+                binder_device_name = argv[1];
+                ok = TRUE;
+            } else {
+                GERR("Device NAME too long");
+            }
         } else {
             help = g_option_context_get_help(options, TRUE, NULL);
             fprintf(stderr, "%s", help);
@@ -100,7 +104,7 @@ int main(int argc, char *argv[])
     if (ok) {
         if (!remove) {
             struct binderfs_device device = { 0 };
-            struct binderfs_device legacy_device = { 0 };
+            struct binderfs_device_legacy legacy_device = { 0 };
             int fd;
             memcpy(device.name, binder_device_name, strlen(binder_device_name));
             memcpy(legacy_device.name, binder_device_name, strlen(binder_device_name));
