@@ -25,7 +25,7 @@ Binder command line utilities.
 %setup -q
 
 %build
-make -C binder-add KEEP_SYMBOLS=1 release
+%make_build -C binder-add KEEP_SYMBOLS=1 release
 
 %install
 rm -rf %{buildroot}
